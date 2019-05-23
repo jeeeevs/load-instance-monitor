@@ -1,6 +1,7 @@
 #!/bin/bash
 KIBANA_HOST=kibana:5601
 ELASTICSEARCH_HOST=elasticsearch:9200
+docker build -t metricbeat .
 docker rm -f metricbeat
 docker run \
     --network=my-ne \
@@ -12,7 +13,7 @@ docker run \
     --volume="/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro" \
     --volume="/proc:/hostfs/proc:ro" \
     --volume="/:/hostfs:ro" \
-    docker.elastic.co/beats/metricbeat:7.0.1 \
+    metricbeat \
     setup -E setup.kibana.host=$KIBANA_HOST \
     -E output.elasticsearch.hosts=[$ELASTICSEARCH_HOST]
 
@@ -27,7 +28,7 @@ docker run \
     --volume="/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro" \
     --volume="/proc:/hostfs/proc:ro" \
     --volume="/:/hostfs:ro" \
-    docker.elastic.co/beats/metricbeat:7.0.1 metricbeat -e \
+    metricbeat metricbeat -e \
     -system.hostfs=/hostfs \
     -E output.elasticsearch.hosts=[$ELASTICSEARCH_HOST] \
     -E setup.kibana.host=$KIBANA_HOST 

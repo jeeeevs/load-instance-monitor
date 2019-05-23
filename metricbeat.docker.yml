@@ -22,7 +22,7 @@ metricbeat.modules:
     - "memory"
     - "network"
   hosts: ["unix:///var/run/docker.sock"]
-  period: 10s
+  period: 2s
   enabled: true
 
 - module: system
@@ -42,7 +42,7 @@ metricbeat.modules:
     - raid           # Raid
     #- socket         # Sockets and connection info (linux only)
   enabled: true
-  period: 10s
+  period: 2s
   processes: ['.*']
 
   ccpu.metrics: [percentages, normalized_percentages, ticks]
